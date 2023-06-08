@@ -1,0 +1,9 @@
+@use '../../../index.scss';
+
+.subTable {
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

@@ -1,0 +1,5 @@
+@use '../../index.scss';
+
+#customers {
+    @extend .p-3;
+}

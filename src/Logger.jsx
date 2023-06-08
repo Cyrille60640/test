@@ -15,7 +15,8 @@ export const Logger = () => {
 	// * Déclarations:
 	const [isConnected, setConnexion] = useState(false),
 		[userInfos, setUserInfos] = useState({}),
-		[checked, setChecked] = useState(false)
+		[checked, setChecked] = useState(false),
+		[apiResponse, setApiResponse] = useState()
 
 	// * Check du Bearer:
 	useEffect(() => {
@@ -40,23 +41,34 @@ export const Logger = () => {
 	// * Intercepteur Axios:
 	axios.interceptors.response.use(
 		(response) => {
+			let { status_code, message, messageMustBeShown } = response.data
+			if (messageMustBeShown) {
+				setApiResponse({
+					type: [200, 201].includes(status_code)
+						? 'success'
+						: 'warning',
+					message
+				})
+			}
 			return response
 		},
 		(error) => {
-			if (error) {
-				let { response } = error
-				if (
-					response &&
-					response.status === 401 &&
-					response.data.message !== 'Mot de passe incorrect..'
-				) {
+			if (process.env.ENVIRONMENT === 'DEV') {
+				console.error(error)
+			}
+
+			if (error.response) {
+				let { data, status } = error.response
+				if (status !== 401) {
+					console.log(error.response)
+					let { message } = data
+					setApiResponse({ type: 'error', message })
+				} else {
 					localStorage.clear()
 					window.location.reload()
-				} else {
-					console.log(error)
 				}
 			} else {
-				console.log('Erreur !')
+				setApiResponse({ type: 'error', message: 'Erreur !' })
 			}
 
 			throw error
@@ -67,11 +79,14 @@ export const Logger = () => {
 	if (!checked) {
 		return <Loader isFullScreen />
 	} else if (!isConnected) {
-		return <Connect />
+		return <Connect apiResponse={apiResponse} />
 	} else {
 		return (
 			<Context.Provider value={userInfos}>
-				<App />
+				<App
+					apiResponse={apiResponse}
+					setApiResponse={setApiResponse}
+				/>
 			</Context.Provider>
 		)
 	}

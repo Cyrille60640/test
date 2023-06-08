@@ -1,0 +1,6 @@
+@use '../../../index.scss';
+
+hr {
+    @extend .w-100;
+    border-top: 1px solid black;
+}

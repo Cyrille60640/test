@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 const Div = ({ id, className, children }) => {
 	return (
-		<div id={id} className={className}>
+		<div id={id} className={`div ${className ?? ''}`}>
 			{children}
 		</div>
 	)

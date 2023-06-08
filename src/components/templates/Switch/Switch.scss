@@ -1,0 +1,10 @@
+@use '../../../index.scss';
+
+.switch {
+    @extend .align-center;
+    @extend .flex-column;
+
+    .switch__label {
+        text-align: center;
+    }
+}

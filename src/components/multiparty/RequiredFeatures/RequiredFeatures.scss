@@ -1,0 +1,13 @@
+@use '../../../index.scss';
+
+#requiredFeatures {
+    .requiredFeatures__row {
+        @extend .justify-around;
+
+        &>div {
+            @extend .w-33;
+            @extend .justify-align-center;
+            @extend .my-1;
+        }
+    }
+}

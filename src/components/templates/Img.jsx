@@ -4,7 +4,7 @@ const Img = ({ id, className, src, alt, onLoad }) => {
 	return (
 		<img
 			id={id}
-			className={className}
+			className={`img ${className ?? ''}`}
 			src={src}
 			alt={alt}
 			onLoad={onLoad}

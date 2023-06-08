@@ -1,0 +1,22 @@
+@use '../../../index.scss';
+
+.table {
+    @extend .w-100;
+    background-color: white;
+
+    .rdt_TableHeader {
+        min-height: auto;
+    }
+
+    .rdt_Table {
+        overflow: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .cxcOiE {
+        font-size: 1em;
+    }
+}

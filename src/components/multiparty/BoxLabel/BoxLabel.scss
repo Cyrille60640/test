@@ -1,0 +1,77 @@
+@use '../../../App/App.scss';
+
+#boxLabel {
+    @extend .justify-around;
+    @extend .align-center;
+    @extend .flex-column;
+    @extend .h-100;
+
+    .boxLabel__locator {
+        @extend .justify-center;
+
+        .boxLabel__container {
+            width: 680px;
+
+            .boxLabel__logo {
+                @extend .justify-center;
+                @extend .mb-2;
+                height: 76px;
+            }
+
+            .boxLabel__table {
+                @extend .fw-bold;
+                border: 1px solid black;
+                height: 370px;
+
+                .boxLabel__big-row {
+                    @extend .border-bottom;
+                    @extend .d-flex;
+                    height: 110px;
+                    font-size: 3em;
+
+                    .boxLabel__big-cell {
+                        @extend .justify-align-center;
+                        @extend .h-100;
+                    }
+
+                    .boxLabel__first-cell {
+                        @extend .boxLabel__big-cell;
+                        @extend .border-right;
+                        width: 270px;
+                    }
+
+                    .boxLabel__second-cell {
+                        @extend .boxLabel__big-cell;
+                        width: 410px;
+                    }
+                }
+
+                .boxLabel__designation-cell {
+                    @extend .border-bottom;
+                    @extend .justify-align-center;
+                    @extend .text-center;
+                    height: 95px;
+                    font-size: 1.8em;
+                }
+
+                .boxLabel__types-cell {
+                    @extend .fw-normal;
+                    @extend .border-bottom;
+                    @extend .px-2;
+                    height: 25px;
+                    font-size: 0.8em;
+                    overflow-x: hidden !important;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                .boxLabel__footer {
+                    @extend .justify-around;
+                }
+            }
+
+        }
+
+    }
+
+}

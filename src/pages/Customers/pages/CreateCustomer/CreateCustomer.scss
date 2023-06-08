@@ -1,0 +1,9 @@
+@use '../../../../index.scss';
+
+#createCustomer {
+    overflow-y: scroll;
+
+    #createCustomer__group-form-input {
+        @extend .mt-2;
+    }
+}

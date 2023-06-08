@@ -1,0 +1,19 @@
+@use '../index.scss';
+
+#app {
+    @extend .d-flex;
+    height: 100vh;
+    width: 100%;
+
+    >.div {
+        height: 100%;
+    }
+
+    #app__page {
+        width: 100%;
+        
+        >div {
+            height: 100%;
+        }
+    }
+}
