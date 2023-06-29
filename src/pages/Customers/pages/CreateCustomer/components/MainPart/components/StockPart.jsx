@@ -1,5 +1,9 @@
 import { useState } from 'react'
-import { Div, SubTitle, Switch } from '../../../../../components/templates'
+import {
+	Div,
+	SubTitle,
+	Switch
+} from '../../../../../../../components/templates'
 
 const StockPart = ({ control }) => {
 	// * Déclaration:

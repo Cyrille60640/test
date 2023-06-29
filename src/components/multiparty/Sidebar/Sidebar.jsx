@@ -47,7 +47,7 @@ const Sidebar = () => {
 			icon: <GiClothes />,
 			label: 'Produits',
 			items: [
-				{ label: 'Liste Des Produits', link: '' },
+				{ label: 'Liste Des Produits', link: '/products' },
 				{ label: 'Identification', link: '/identification' },
 				{ label: 'Produits A Photographier', link: '' },
 				{ label: 'Produits A Valider', link: '' },

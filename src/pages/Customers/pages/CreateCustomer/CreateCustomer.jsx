@@ -1,21 +1,9 @@
 import { useForm } from 'react-hook-form'
-import {
-	Button,
-	Div,
-	Form,
-	Separator,
-	Title
-} from '../../../../components/templates'
+import { Div, Form, Title } from '../../../../components/templates'
 import { useNavigate } from 'react-router-dom'
 import { createOneCustomer, uploadCustomerLogo } from '../../../../services'
 import './CreateCustomer.scss'
-import {
-	BillingPart,
-	IdentificationPart,
-	IdentityPart,
-	ProductsPart,
-	StockPart
-} from './components'
+import { BoxProcessPart, MainPart } from './components'
 import { useState } from 'react'
 
 const CreateCustomer = ({ datas }) => {
@@ -23,8 +11,8 @@ const CreateCustomer = ({ datas }) => {
 	const navigate = useNavigate(),
 		{
 			control,
-			handleSubmit,
 			setValue,
+			getValues,
 			formState: { errors }
 		} = useForm({
 			defaultValues: {
@@ -41,13 +29,15 @@ const CreateCustomer = ({ datas }) => {
 		}),
 		{ brands, customersGroups, customersTypes, qualities, tvas } = datas,
 		elementId = undefined,
+		[part, setPart] = useState(1),
 		[
 			billindAndDeliveryAddressAreTheSame,
 			setBillindAndDeliveryAddressAreTheSame
 		] = useState(false),
-		[checkParameters, setCheckParameters] = useState(false),
-		onSubmit = (data) => {
-			let { billing_address, delivery_address } = data,
+		[boxProcessMode, setBoxProcessMode] = useState(false),
+		handleSubmit = () => {
+			let data = getValues(),
+				{ billing_address, delivery_address } = data,
 				dataToSubmit = {
 					...data,
 					delivery_address: !billindAndDeliveryAddressAreTheSame
@@ -57,6 +47,13 @@ const CreateCustomer = ({ datas }) => {
 			createOneCustomer(dataToSubmit).then((id) => {
 				uploadCustomerLogo(dataToSubmit, id)
 			})
+		},
+		handleEndingPart1 = () => {
+			if (!boxProcessMode) {
+				handleSubmit()
+			} else {
+				setPart(2)
+			}
 		}
 
 	return (
@@ -66,60 +63,39 @@ const CreateCustomer = ({ datas }) => {
 			<Form
 				id={'createCustomer'}
 				className={'p-4 w-75 flex-column'}
-				onSubmit={handleSubmit(onSubmit)}
 				encType={'multipart/form-data'}
 			>
-				<IdentityPart
-					control={control}
-					setValue={setValue}
-					errors={errors}
-					datas={{ customersGroups, customersTypes }}
-					billindAndDeliveryAddressAreTheSame={
-						billindAndDeliveryAddressAreTheSame
-					}
-					setBillindAndDeliveryAddressAreTheSame={
-						setBillindAndDeliveryAddressAreTheSame
-					}
-				/>
-
-				<Separator />
-
-				<BillingPart
-					control={control}
-					setValue={setValue}
-					errors={errors}
-					tvas={tvas}
-				/>
-
-				<Separator />
-
-				<StockPart control={control} />
-
-				<Separator />
-
-				<ProductsPart
-					control={control}
-					errors={errors}
-					datas={{ brands, qualities }}
-					setCheckParameters={setCheckParameters}
-				/>
-
-				<Separator />
-
-				<IdentificationPart
-					control={control}
-					setValue={setValue}
-					checkParameters={checkParameters}
-				/>
-
-				<Div className={'justify-center mt-3'}>
-					<Button label={'Retour'} onClick={() => navigate('/')} />
-					<Button
-						type={'submit'}
-						className={'ms-3'}
-						label={elementId === undefined ? 'Ajouter' : 'Modifier'}
+				{part === 1 ? (
+					<MainPart
+						control={control}
+						setValue={setValue}
+						errors={errors}
+						customersGroups={customersGroups}
+						customersTypes={customersTypes}
+						billindAndDeliveryAddressAreTheSame={
+							billindAndDeliveryAddressAreTheSame
+						}
+						setBillindAndDeliveryAddressAreTheSame={
+							setBillindAndDeliveryAddressAreTheSame
+						}
+						tvas={tvas}
+						brands={brands}
+						qualities={qualities}
+						boxProcessMode={boxProcessMode}
+						setBoxProcessMode={setBoxProcessMode}
+						navigate={navigate}
+						handleEndingPart1={handleEndingPart1}
+						elementId={elementId}
 					/>
-				</Div>
+				) : (
+					<BoxProcessPart
+						datas={datas}
+						control={control}
+						setValue={setValue}
+						getValues={getValues}
+						errors={errors}
+					/>
+				)}
 			</Form>
 		</Div>
 	)

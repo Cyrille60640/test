@@ -4,13 +4,13 @@ import {
 	Form,
 	Input,
 	Modal
-} from '../../../../../../../components/templates'
-import { REGSTRING } from '../../../../../../../utils/regex'
-import '../../../CreateCustomer.scss'
+} from '../../../../../../../../../components/templates'
+import { REGSTRING } from '../../../../../../../../../utils/regex'
+import '../../../../../CreateCustomer.scss'
 import {
 	createCustomerGroup,
 	refreshCustomersGroups
-} from '../../../../../../../services'
+} from '../../../../../../../../../services'
 
 const CustomerGroupForm = ({
 	openCustomerGroupModal,

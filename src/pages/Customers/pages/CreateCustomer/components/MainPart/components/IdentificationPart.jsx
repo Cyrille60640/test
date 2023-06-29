@@ -1,6 +1,10 @@
-import { Div, SubTitle, Switch } from '../../../../../components/templates'
+import {
+	Div,
+	SubTitle,
+	Switch
+} from '../../../../../../../components/templates'
 import { useState } from 'react'
-import { RequiredFeatures } from '../../../../../components/multiparty'
+import { RequiredFeatures } from '../../../../../../../components/multiparty'
 
 const IdentificationPart = ({ control, setValue, checkParameters }) => {
 	const [identificationEnabled, setIdentificationEnabled] = useState(false)

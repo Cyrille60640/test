@@ -7,8 +7,8 @@ import {
 	Input,
 	Select,
 	SubTitle
-} from '../../../../../../components/templates'
-import { REGSTRING } from '../../../../../../utils/regex'
+} from '../../../../../../../../components/templates'
+import { REGSTRING } from '../../../../../../../../utils/regex'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { CustomerGroupForm } from './components'
 

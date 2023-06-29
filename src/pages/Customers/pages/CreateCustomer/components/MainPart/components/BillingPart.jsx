@@ -4,9 +4,9 @@ import {
 	Select,
 	SubTitle,
 	Switch
-} from '../../../../../components/templates'
+} from '../../../../../../../components/templates'
 import { useState } from 'react'
-import { REGNUM, REGSTRING } from '../../../../../utils/regex'
+import { REGNUM, REGSTRING } from '../../../../../../../utils/regex'
 
 const BillingPart = ({ control, setValue, errors, tvas }) => {
 	// * Déclaration:

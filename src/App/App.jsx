@@ -6,6 +6,7 @@ import {
 	Customers,
 	CreateCustomer,
 	Identification,
+	Products,
 	Sales,
 	CreateSale
 } from '../pages'
@@ -41,7 +42,7 @@ const App = ({ apiResponse, setApiResponse }) => {
 		},
 		[datas, setDatas] = useState({}),
 		[datasLoaded, setDatasLoaded] = useState(false),
-		{ boxs, categories, styles, tvas } = datas,
+		{ boxs, boxProcessTables, categories, styles, tvas } = datas,
 		[attributes, setAttributes] = useState(defaultDataState),
 		[brands, setBrands] = useState(defaultDataState),
 		[classes, setClasses] = useState(defaultDataState),
@@ -126,10 +127,15 @@ const App = ({ apiResponse, setApiResponse }) => {
 					<CreateCustomer
 						datas={{
 							brands,
+							categories,
+							boxProcessTables,
 							customersGroups,
 							customersTypes,
 							qualities,
-							tvas
+							seasons,
+							styles,
+							tvas,
+							types
 						}}
 					/>
 				)
@@ -160,6 +166,15 @@ const App = ({ apiResponse, setApiResponse }) => {
 							supportsLines,
 							types
 						}}
+						setApiResponse={setApiResponse}
+					/>
+				)
+			},
+			{
+				path: '/products',
+				element: (
+					<Products
+						items={{ brands, colors }}
 						setApiResponse={setApiResponse}
 					/>
 				)

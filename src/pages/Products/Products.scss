@@ -1,0 +1,10 @@
+@use '../../index.scss';
+
+#products {
+    @extend .align-center;
+    @extend .flex-column;
+
+    #table {
+        @extend .h-50;
+    }
+}
