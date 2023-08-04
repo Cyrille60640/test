@@ -5,7 +5,7 @@ import {
 	MenuItem,
 	useProSidebar
 } from 'react-pro-sidebar'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useContext, forwardRef } from 'react'
 import { Context } from '../../../Logger'
 import { Button, Div, Img } from '../../templates'
@@ -22,6 +22,7 @@ import { Tooltip } from '@mui/material'
 const Sidebar = () => {
 	// * Déclarations:
 	const { collapsed } = useProSidebar(),
+		navigate = useNavigate(),
 		userInfos = useContext(Context),
 		{ lastname: userLastname, firstname: userFirstname } = userInfos
 
@@ -32,7 +33,8 @@ const Sidebar = () => {
 			label: 'Commandes',
 			items: [
 				{ label: 'Nouvelle Commande', link: '/createSale' },
-				{ label: 'Liste Des Commandes', link: '/sales' }
+				{ label: 'Liste Des Commandes', link: '/sales' },
+				{ label: 'Commandes en ligne', link: '/newOnlineSales' }
 			]
 		},
 		{
@@ -49,11 +51,14 @@ const Sidebar = () => {
 			items: [
 				{ label: 'Liste Des Produits', link: '/products' },
 				{ label: 'Identification', link: '/identification' },
-				{ label: 'Produits A Photographier', link: '' },
-				{ label: 'Produits A Valider', link: '' },
-				{ label: 'Produits A Transférer', link: '' },
-				{ label: 'Produits Transférés', link: '' },
-				{ label: 'Produits Supprimés', link: '' }
+				{
+					label: 'Produits A Photographier',
+					link: '/productsToPhotograph'
+				},
+				{ label: 'Produits A Valider', link: '/productsToValidate' },
+				{ label: 'Produits A Transférer', link: '/productsToTransfer' },
+				{ label: 'Produits Transférés', link: '/transferredProducts' },
+				{ label: 'Produits Supprimés', link: '/deletedProducts' }
 			]
 		},
 		{
@@ -79,26 +84,29 @@ const Sidebar = () => {
 			icon: <SiNike />,
 			label: 'Marques',
 			items: [
-				{ label: 'Liste Des Marques', link: '' },
-				{ label: 'Liste Des Marques Non Identifiées', link: '' }
+				{ label: 'Liste Des Marques', link: '/brands' },
+				{
+					label: 'Liste Des Marques Non Identifiées',
+					link: '/unidentifiedBrands'
+				}
 			]
 		},
 		{
 			icon: <BsTable />,
 			label: 'Administration',
 			items: [
-				{ label: 'Utilisateurs', link: '' },
-				{ label: 'Catégories', link: '' },
-				{ label: 'Classes', link: '' },
-				{ label: 'Etats', link: '' },
-				{ label: 'Imprimés', link: '' },
-				{ label: 'Tailles', link: '' },
-				{ label: 'Matières', link: '' },
-				{ label: 'Sous-Attributs', link: '' },
-				{ label: 'Groupes de Types', link: '' },
-				{ label: 'Types', link: '' },
-				{ label: 'Styles', link: '' },
-				{ label: 'Paramêtrage EAN13', link: '' }
+				{ label: 'Utilisateurs', link: '/admin/users' },
+				{ label: 'Attributs', link: '/admin/attributes' },
+				{ label: 'Catégories', link: '/admin/categories' },
+				{ label: 'Classes', link: '/admin/classes' },
+				{ label: 'Etats', link: '/admin/states' },
+				{ label: 'Imprimés', link: '/admin/prints' },
+				{ label: 'Tailles', link: '/admin/sizes' },
+				{ label: 'Matières', link: '/admin/materials' },
+				{ label: 'Groupes de Types', link: '/admin/typeGroups' },
+				{ label: 'Types', link: '/admin/types' },
+				{ label: 'Styles', link: '/admin/styles' },
+				{ label: 'Paramêtrage EAN13', link: '/admin/ean13' }
 			]
 		}
 	]
@@ -107,7 +115,7 @@ const Sidebar = () => {
 	const disconnect = () => {
 		localStorage.clear()
 		// localStorage.removeItem('REACT_AUTH_TOKEN')
-		window.location.reload()
+		window.location.reload(false)
 	}
 
 	const MyComponent = forwardRef(function MyComponent(props, ref) {
@@ -121,7 +129,8 @@ const Sidebar = () => {
 						return (
 							<MenuItem
 								key={label}
-								component={<Link to={link} />}
+								onClick={() => navigate(link)}
+								// component={<Link to={link} />}
 							>
 								{label}
 							</MenuItem>
@@ -134,7 +143,7 @@ const Sidebar = () => {
 
 	return (
 		<RPSidebar id={'sidebar'} defaultCollapsed={true}>
-			<Div id={'sidebar__header'}>
+			<Div id={'sidebar__header'} onClick={() => navigate('/')}>
 				<Img src={logo} alt={'Logo Sapée'} />
 				<Img src={logoTitle} alt={'Titre Sapée'} />
 			</Div>

@@ -1,23 +1,14 @@
 import './App.scss'
 import { useState, useEffect } from 'react'
 import { Div } from '../components/templates'
-import { ApiResponse, Sidebar } from '../components/multiparty'
-import {
-	Customers,
-	CreateCustomer,
-	Identification,
-	Products,
-	Sales,
-	CreateSale
-} from '../pages'
+import { Rooting } from './modules'
 import { ProSidebarProvider } from 'react-pro-sidebar'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import {
 	getAllAttributes,
-	getAllBrands,
 	getAllClasses,
 	getAllColors,
 	getAll,
+	getAllProducts,
 	getAllCustomerGroups,
 	getAllCustomers,
 	getAllCustomerTypes,
@@ -36,15 +27,12 @@ const App = ({ apiResponse, setApiResponse }) => {
 	// * Récupération des datas et transformation en options:
 	const defaultDataState = {
 			datas: [],
-			options: [],
 			refreshDate: null,
 			setter: null
 		},
 		[datas, setDatas] = useState({}),
 		[datasLoaded, setDatasLoaded] = useState(false),
-		{ boxs, boxProcessTables, categories, styles, tvas } = datas,
 		[attributes, setAttributes] = useState(defaultDataState),
-		[brands, setBrands] = useState(defaultDataState),
 		[classes, setClasses] = useState(defaultDataState),
 		[colors, setColors] = useState(defaultDataState),
 		[customers, setCustomers] = useState(defaultDataState),
@@ -52,6 +40,7 @@ const App = ({ apiResponse, setApiResponse }) => {
 		[customersTypes, setCustomersTypes] = useState(defaultDataState),
 		[materials, setMaterials] = useState(defaultDataState),
 		[prints, setPrints] = useState(defaultDataState),
+		[products, setProducts] = useState(defaultDataState),
 		[qualities, setQualities] = useState(defaultDataState),
 		[seasons, setSeasons] = useState(defaultDataState),
 		[sizes, setSizes] = useState(defaultDataState),
@@ -62,10 +51,6 @@ const App = ({ apiResponse, setApiResponse }) => {
 			{
 				getterFunction: getAllAttributes,
 				setter: setAttributes
-			},
-			{
-				getterFunction: getAllBrands,
-				setter: setBrands
 			},
 			{
 				getterFunction: getAllClasses,
@@ -119,74 +104,6 @@ const App = ({ apiResponse, setApiResponse }) => {
 				getterFunction: getAllTypes,
 				setter: setTypes
 			}
-		],
-		routes = [
-			{
-				path: '/createCustomer',
-				element: (
-					<CreateCustomer
-						datas={{
-							brands,
-							categories,
-							boxProcessTables,
-							customersGroups,
-							customersTypes,
-							qualities,
-							seasons,
-							styles,
-							tvas,
-							types
-						}}
-					/>
-				)
-			},
-			{
-				path: '/customers',
-				element: <Customers customers={customers} />
-			},
-			{
-				path: '/identification',
-				element: (
-					<Identification
-						datas={{
-							attributes,
-							boxs,
-							brands,
-							categories,
-							classes,
-							colors,
-							customers,
-							materials,
-							prints,
-							qualities,
-							seasons,
-							sizes,
-							states,
-							styles,
-							supportsLines,
-							types
-						}}
-						setApiResponse={setApiResponse}
-					/>
-				)
-			},
-			{
-				path: '/products',
-				element: (
-					<Products
-						items={{ brands, colors }}
-						setApiResponse={setApiResponse}
-					/>
-				)
-			},
-			{
-				path: '/sales',
-				element: <Sales sales={[]} />
-			},
-			{
-				path: '/createSale',
-				element: <CreateSale />
-			}
 		]
 
 	useEffect(() => {
@@ -197,19 +114,14 @@ const App = ({ apiResponse, setApiResponse }) => {
 
 			getterFunction().then((data) => {
 				let { datas } = data,
-					datasToState = [],
-					optionsToState = []
+					datasToState = []
 
 				if (datas) {
 					datasToState = JSON.parse(JSON.stringify(datas))
-					optionsToState = formateOptions(
-						JSON.parse(JSON.stringify(datas))
-					)
 				}
 
 				setter({
 					datas: datasToState,
-					options: optionsToState,
 					refreshDate,
 					setter
 				})
@@ -221,9 +133,6 @@ const App = ({ apiResponse, setApiResponse }) => {
 			Object.keys(data.datas).forEach((key) => {
 				datasToState[key] = {
 					datas: data.datas[key],
-					options: formateOptions(
-						JSON.parse(JSON.stringify(data.datas[key]))
-					),
 					refreshDate
 				}
 			})
@@ -232,30 +141,29 @@ const App = ({ apiResponse, setApiResponse }) => {
 		})
 	}, [])
 
+	useEffect(() => {
+		let refreshDate = new Date().toISOString()
+		if (datasLoaded) {
+			let { brands } = datas
+			getAllProducts({ brands, colors }).then((data) => {
+				setProducts({
+					datas: data.datas,
+					refreshDate
+				})
+			})
+		}
+	}, [datasLoaded])
+
 	return (
 		<ProSidebarProvider>
 			<Div id={'app'}>
-				<Router>
-					<Sidebar />
-					<Div id={'app__page'}>
-						{datasLoaded && (
-							<Routes>
-								{routes.map((route) => {
-									let { path, element, exact } = route
-									return (
-										<Route
-											key={path}
-											path={path}
-											element={element}
-											exact={exact}
-										/>
-									)
-								})}
-							</Routes>
-						)}
-						<ApiResponse apiResponse={apiResponse} />
-					</Div>
-				</Router>
+				<Rooting
+					datasLoaded={datasLoaded}
+					datas={datas}
+					products={products}
+					apiResponse={apiResponse}
+					setApiResponse={setApiResponse}
+				/>
 			</Div>
 		</ProSidebarProvider>
 	)

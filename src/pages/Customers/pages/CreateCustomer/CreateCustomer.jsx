@@ -58,7 +58,7 @@ const CreateCustomer = ({ datas }) => {
 
 	return (
 		<Div className={'justify-align-center flex-column w-100 h-100'}>
-			<Title children={'Ajouter un client'} />
+			<Title title={'Ajouter un client'} />
 
 			<Form
 				id={'createCustomer'}

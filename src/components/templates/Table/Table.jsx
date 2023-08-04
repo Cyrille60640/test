@@ -19,6 +19,7 @@ const Table = ({
 	subHeaderComponent,
 	keysForCSV,
 	csvName,
+	actions,
 	conditionalRowStyles,
 	pointerOnHover,
 	onRowClicked,
@@ -82,17 +83,17 @@ const Table = ({
 		link.click()
 	}
 
-	// Création du boutton:
-	const CreateButton = () => (
-		<Div className={'me-2'}>
-			<Button
-				className={'w-10 justify-align-center mb-1'}
-				onClick={() => navigate('/createCustomer')}
-			>
-				<Img src={logoCSV} className={'w-20 ms-1'} alt={'Créer'} />
-			</Button>
-		</Div>
-	)
+	// // Création du boutton:
+	// const CreateButton = () => (
+	// 	<Div className={'me-2'}>
+	// 		<Button
+	// 			className={'w-10 justify-align-center mb-1'}
+	// 			onClick={() => navigate('/createCustomer')}
+	// 		>
+	// 			<Img src={logoCSV} className={'w-20 ms-1'} alt={'Créer'} />
+	// 		</Button>
+	// 	</Div>
+	// )
 
 	// Création du mémo:
 	// const actionsMemo = useMemo(
@@ -103,25 +104,16 @@ const Table = ({
 	// * Création du header:
 	const Title = ({ onExport }) => {
 		return (
-			<Div className={'d-flex'}>
-				{/* <Div className={'w-33'}></Div> */}
+			<Div className={'justify-around'}>
 				<Div>{title}</Div>
 				<Div className={'me-2'}>
-					<Button className={'w-10 justify-align-center mb-1'}>
-						<Img
-							src={logoCSV}
-							className={'w-20 ms-1'}
-							alt={'Etendre'}
-						/>
-					</Button>
 					<Button
 						className={'w-10 justify-align-center mb-1'}
 						onClick={(e) => onExport(e.target.value)}
 					>
-						Export{' '}
 						<Img
 							src={logoCSV}
-							className={'w-20 ms-1'}
+							className={'w-60 ms-1'}
 							alt={'Logo CSV'}
 						/>
 					</Button>
@@ -145,7 +137,7 @@ const Table = ({
 				subHeader={subHeader}
 				subHeaderComponent={subHeaderComponent}
 				highlightOnHover
-				actions={<CreateButton />}
+				actions={actions}
 				conditionalRowStyles={conditionalRowStyles}
 				pointerOnHover={pointerOnHover}
 				onRowClicked={onRowClicked}

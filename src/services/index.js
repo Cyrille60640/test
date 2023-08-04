@@ -1,6 +1,5 @@
 import { getAllAttributes } from './attribute'
 import { createBox } from './box'
-import { getAllBrands } from './brand'
 import { getAllClasses } from './class'
 import { getAllColors } from './color'
 import { getAll } from './common'
@@ -55,7 +54,6 @@ const getSpecificsProducts = () => {
 export {
 	getAllAttributes,
 	createBox,
-	getAllBrands,
 	getAllClasses,
 	getAllColors,
 	getAll,

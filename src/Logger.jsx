@@ -65,7 +65,7 @@ export const Logger = () => {
 					setApiResponse({ type: 'error', message })
 				} else {
 					localStorage.clear()
-					window.location.reload()
+					window.location.reload(false)
 				}
 			} else {
 				setApiResponse({ type: 'error', message: 'Erreur !' })

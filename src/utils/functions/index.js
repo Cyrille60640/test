@@ -1,6 +1,7 @@
 import {
 	asyncForEach,
 	formateOptions,
+	getFrenchTitleForTable,
 	handleElementDisplay,
 	refreshDatas,
 	sortByName
@@ -9,6 +10,7 @@ import {
 export {
 	asyncForEach,
 	formateOptions,
+	getFrenchTitleForTable,
 	handleElementDisplay,
 	refreshDatas,
 	sortByName

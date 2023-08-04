@@ -1,6 +1,6 @@
 import { SubTable } from '../../../components/multiparty'
 
-const CustomersTable = ({ customers }) => {
+const CustomersTable = ({ customers, setSelectedCustomer }) => {
 	// * Déclararations:
 	const columns = [
 		{
@@ -14,6 +14,7 @@ const CustomersTable = ({ customers }) => {
 			title={'Liste des distributeurs'}
 			columns={columns}
 			datas={customers}
+			onRowClicked={() => setSelectedCustomer()}
 		/>
 	)
 }

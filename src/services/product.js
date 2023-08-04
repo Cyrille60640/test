@@ -8,37 +8,47 @@ const createProduct = async (data) => {
 	})
 }
 
-const getAllProducts = async (items, selector, value) => {
-	// * Détermination de l'url:
-	let urlToGET = url
-	if (selector) {
-		urlToGET += `/${selector}`
-		if (value) {
-			urlToGET += `/${value}`
-		}
-	}
-
+const getAllProducts = async () => {
 	// * Appel
-	return axios.get(urlToGET).then((res) => {
-		let { data } = res,
-			datasToReturn = []
+	return axios.get(url).then((res) => {
+		let { data } = res
 
 		// * Population:
-		data.datas.forEach((product) => {
-			Object.keys(items).forEach((key) => {
-				items[key].datas.forEach((item) => {
-					let itemName = key.substring(0, key.length - 1)
-					if (product[itemName].id === item.id) {
-						product[itemName] = item
-						return delete product[itemName].id
-					}
-				})
-			})
+		// // data.datas.forEach((product) => {
+		// // 	Object.keys(product).forEach((key) => {
+		// // 		if (key.includes('id_')) {
+		// // 			let varName = key.split('id_')[1]
+		// // 			// ? if a retirer:
+		// // 			console.log(items[`${varName}s`])
+		// // 			if (!items[`${varName}s`] || varName !== 'main_product') {
+		// // 				console.log(varName)
+		// // 				throw Error
+		// // 			}
+		// // 			items[`${varName}s`].datas.every((item) => {
+		// // 				if (item.id === product[key]) {
+		// // 					product[varName] = item
+		// // 					delete product[key]
+		// // 					return false
+		// // 				}
+		// // 				return true
+		// // 			})
+		// // 		}
+		// // 	})
+		// // })
 
-			datasToReturn.push(product)
+		// * Formattage:
+		data.datas.forEach((product) => {
+			let price = product.price.toString()
+			price = `${price.substring(0, price.length - 2)}.${price.substring(
+				price.length - 2,
+				price.length
+			)}`
+			product.price = price
 		})
 
-		return { ...data, datas: datasToReturn }
+		console.log(data.datas[0])
+
+		return data
 	})
 }
 

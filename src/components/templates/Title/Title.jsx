@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import './Title.scss'
 
-const Title = ({ children }) => {
-	return <h2>{children}</h2>
+const Title = ({ title }) => {
+	return <h2>{title}</h2>
 }
 
 Title.propTypes = {
-	children: PropTypes.string
+	title: PropTypes.string
 }
 
 export default Title

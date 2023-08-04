@@ -1,5 +1,6 @@
 import './Customers.scss'
 import { Div } from '../../components/templates'
+import { useState } from 'react'
 import {
 	CustomersTable,
 	IdentificationSettingsTable,
@@ -9,19 +10,28 @@ import {
 } from './components'
 
 const Customers = ({ customers }) => {
+	const [selectedCustomer, setSelectedCustomer] = useState()
+
 	return (
 		<Div id={'customers'}>
-			<Div className={'h-33'}>
-				<CustomersTable customers={customers.datas} />
+			<Div className={!selectedCustomer ? 'h-33' : 'h-100'}>
+				<CustomersTable
+					customers={customers.datas}
+					setSelectedCustomer={setSelectedCustomer}
+				/>
 			</Div>
-			<Div className={'d-flex h-33'}>
-				<StoreTable />
-				<ProductsInStockTable />
-			</Div>
-			<Div className={'d-flex h-33'}>
-				<QualitiesSettingsTable />
-				<IdentificationSettingsTable />
-			</Div>
+			{selectedCustomer && (
+				<Div>
+					<Div className={'d-flex h-33'}>
+						<StoreTable />
+						<ProductsInStockTable />
+					</Div>
+					<Div className={'d-flex h-33'}>
+						<QualitiesSettingsTable />
+						<IdentificationSettingsTable />
+					</Div>
+				</Div>
+			)}
 		</Div>
 	)
 }

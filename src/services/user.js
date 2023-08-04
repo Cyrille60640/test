@@ -10,7 +10,7 @@ const authenticateUser = async (data) => {
 				'REACT_TOKEN_AUTH_TRI_ECOTEXTILE',
 				JSON.stringify(data.token)
 			)
-			window.location.reload()
+			window.location.reload(false)
 		}
 	})
 }

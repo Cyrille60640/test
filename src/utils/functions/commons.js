@@ -43,6 +43,49 @@ const formateOptions = (options) => {
 	return options
 }
 
+// * Fonction pour le panel d'administration:
+const getFrenchTitleForTable = (table) => {
+	switch (table) {
+		case 'attributes':
+			return 'Attributs'
+
+		case 'categories':
+			return 'Catégories'
+
+		case 'classes':
+			return 'Classes'
+
+		case 'colors':
+			return 'Couleures'
+
+		case 'state':
+			return 'Etats'
+
+		case 'print':
+			return 'Imprimés'
+
+		case 'material':
+			return 'Matières'
+
+		case 'season':
+			return 'Saisons'
+
+		case 'size':
+			return 'Tailles'
+
+		case 'type':
+			return 'Types'
+
+		case 'sizeType':
+			return 'Types de taille'
+
+		case 'tva':
+			return 'T.V.A.'
+
+		default:
+	}
+}
+
 // Fonction pour masquer/demasquer un element:
 const handleElementDisplay = (mode, idsToDNone, classesToDNone) => {
 	if (idsToDNone) {
@@ -119,7 +162,8 @@ const refreshDatas = (datasToManage, state) => {
 export {
 	asyncForEach,
 	formateOptions,
-	sortByName,
+	getFrenchTitleForTable,
 	handleElementDisplay,
-	refreshDatas
+	refreshDatas,
+	sortByName
 }
